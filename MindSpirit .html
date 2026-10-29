@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#5145CD">
+<title>MindSprint</title>
+<style>
+:root{--p:#5145CD;--o:#FF9F43;--c:#42C6E8;--bg:#F6F7FF;--t:#222447;--ok:#26A875;--er:#E65353}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
+body{margin:0;font:16px/1.4 system-ui,sans-serif;background:var(--bg);color:var(--t);overscroll-behavior:none}
+h1,h2,h3,p{margin:0}button{font:inherit;cursor:pointer;border:0}
+body.rm *{animation:none!important;transition:none!important}
+#splash{position:fixed;inset:0;z-index:99;background:radial-gradient(circle at 30% 20%,#7a6dff,#5145CD 55%,#2d2790);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;transition:opacity .5s;overflow:hidden}
+#splash.out{opacity:0;pointer-events:none}
+.orb{position:absolute;border-radius:50%;opacity:.22;animation:fl 6s ease-in-out infinite}
+@keyframes fl{50%{transform:translateY(-26px)}}
+.sl{width:112px;height:112px;border-radius:32px;background:#fff;display:grid;place-items:center;box-shadow:0 12px 30px #0004;animation:pu 1.4s ease-in-out infinite;z-index:1}
+@keyframes pu{50%{transform:scale(1.08) rotate(-4deg)}}
+#splash h1{font-size:32px;margin-top:10px;z-index:1}#splash p{opacity:.9;z-index:1}
+.bar{width:210px;height:8px;border-radius:8px;background:#fff3;overflow:hidden;margin-top:16px;z-index:1}
+.bar i{display:block;height:100%;background:var(--o);width:0;animation:ld 1.9s ease-out forwards}
+@keyframes ld{to{width:100%}}
+.view{display:none;padding:16px 16px 100px}.view.on{display:block;animation:f .25s}
+@keyframes f{from{opacity:0;transform:translateY(8px)}}
+nav{position:fixed;bottom:0;left:0;right:0;display:flex;background:#fff;box-shadow:0 -2px 14px #5145cd22;padding-bottom:env(safe-area-inset-bottom)}
+nav button{flex:1;background:0;padding:8px 0;color:#8a8cb0;font-size:12px;display:flex;flex-direction:column;align-items:center;gap:2px;min-height:58px}
+nav button span{width:52px;height:30px;border-radius:15px;display:grid;place-items:center}
+nav button.on{color:var(--p);font-weight:700}nav button.on span{background:#e8e6ff}
+.card{background:#fff;border-radius:20px;box-shadow:0 3px 14px #5145cd1c;padding:16px;margin:12px 0}
+.top{display:flex;align-items:center;gap:10px;font-size:20px}
+.logo{width:42px;height:42px;border-radius:13px;background:var(--p);display:grid;place-items:center}
+.hd{font-size:24px;margin:14px 0 4px}
+.sts{display:flex;text-align:center;margin-bottom:10px}.sts div{flex:1}.sts small{display:block;color:#6d6f96}.sts b{font-size:24px;color:var(--p)}
+.xp,.gp{height:10px;border-radius:10px;background:#e8e6ff;overflow:hidden;margin:6px 0}
+.xp i,.gp i{display:block;height:100%;background:linear-gradient(90deg,var(--c),var(--p));border-radius:10px;transition:width .3s}
+.dly{display:flex;align-items:center;justify-content:space-between;gap:10px;background:linear-gradient(135deg,#fff3e2,#fff)}
+.big{width:100%;min-height:58px;border-radius:18px;background:linear-gradient(135deg,#FF9F43,#ff7a3d);color:#fff;font-weight:800;font-size:18px;box-shadow:0 6px 16px #ff9f4366;margin:6px 0}
+.b2,.b2o{border-radius:14px;min-height:46px;padding:10px 16px;background:#e8e6ff;color:var(--p);font-weight:700}
+.b2o{background:var(--o);color:#fff}
+.sh{margin:16px 0 8px}
+.cats{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cat{min-height:110px;border-radius:20px;color:#fff;font-weight:700;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;padding:10px;box-shadow:0 5px 14px #0002}
+.cat:last-child{grid-column:1/-1;min-height:84px}
+.cat i{width:54px;height:54px;border-radius:50%;background:#fff3;border:2px solid #fffa;display:grid;place-items:center}
+.rec{display:flex;gap:10px}.bd{flex:1;background:#fff;border-radius:16px;padding:10px;text-align:center;font-size:26px;box-shadow:0 2px 8px #5145cd1a}.bd small{display:block;font-size:11px;color:#6d6f96}
+.emp,.qn{color:#6d6f96;text-align:center;padding:8px;font-size:14px}
+.pm{border-radius:20px;overflow:hidden;margin:12px 0;box-shadow:0 3px 14px #5145cd1c;background:#fff}
+.pm>div{padding:12px 16px;color:#fff}.pm small{opacity:.9}.pm .row{display:flex;gap:8px;padding:12px}
+.chip{flex:1;min-height:46px;border-radius:14px;background:#e8e6ff;color:var(--p);font-weight:700}.chip.lk{background:#eee;color:#888}
+.gh{display:flex;align-items:center;gap:10px}.gp{flex:1}.gh b{font-size:20px;min-width:44px;text-align:right}
+.tb{display:flex;align-items:center;gap:10px;margin-bottom:8px}.tb h2{font-size:22px}
+.bk{width:44px;height:44px;border-radius:14px;background:#fff;color:var(--p);font-size:22px;font-weight:800;box-shadow:0 2px 8px #5145cd2a;flex:none}
+.pb{width:44px;height:44px;border-radius:12px;background:#e8e6ff;font-size:18px}
+.qq{font-size:30px;font-weight:800;text-align:center;padding:30px 12px;margin:14px 0;line-height:1.3}
+.opts{display:grid;gap:10px}
+.op{min-height:58px;border-radius:16px;background:#fff;border:2px solid #dcd9ff;font-size:19px;font-weight:700;color:var(--t)}
+.op.ok{background:var(--ok);color:#fff;border-color:var(--ok)}.op.er{background:var(--er);color:#fff;border-color:var(--er)}
+.fb{border-radius:14px;padding:12px;margin:12px 0;background:#fff;font-size:15px}.fb.ok{border-left:6px solid var(--ok)}.fb.er{border-left:6px solid var(--er)}
+.seq{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;font-size:38px;margin:14px 0}
+.dots{display:flex;gap:8px;justify-content:center;margin:12px 0}.dots i{width:14px;height:14px;border-radius:50%;border:2px solid var(--p)}.dots i.f{background:var(--p)}
+.sg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.sy{min-height:76px;border-radius:18px;background:#fff;font-size:36px;box-shadow:0 3px 10px #5145cd22}
+.pad{width:100%;height:46vh;min-height:240px;border-radius:28px;color:#fff;font-size:34px;font-weight:800;margin:10px 0;touch-action:manipulation}
+.res{text-align:center}.res h2{font-size:28px;margin:8px 0}
+.rg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}.rg div{background:#fff;border-radius:16px;padding:12px}.rg b{display:block;font-size:24px;color:var(--p)}
+.ag{display:grid;grid-template-columns:1fr 1fr;gap:12px}.ac{text-align:center;margin:0}.ac span{font-size:38px;display:block}.ac small{display:block;color:#6d6f96;font-size:12px}.ac.lkd{opacity:.65}
+.pf{display:flex;align-items:center;gap:12px}.av{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--p),var(--c));color:#fff;display:grid;place-items:center}
+.kv{display:grid;grid-template-columns:1fr auto;gap:6px 12px;margin-top:8px}
+.srow{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #eee}.srow input{transform:scale(1.5);margin-right:6px}.srow select{padding:8px;border-radius:10px;border:1px solid #cfcdf5}
+#modal{position:fixed;inset:0;background:#0007;z-index:90;display:none;align-items:center;justify-content:center;padding:20px}#modal.on{display:flex}
+.box{background:#fff;border-radius:22px;padding:20px;width:100%;max-width:380px}.box p{margin:8px 0 12px}.box .col{display:grid;gap:8px}
+#toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);background:var(--t);color:#fff;padding:10px 16px;border-radius:20px;z-index:95;opacity:0;transition:.3s;pointer-events:none}#toast.on{opacity:1}
+</style></head><body>
+<div id="splash">
+ <i class="orb" style="width:140px;height:140px;background:#42C6E8;left:-30px;top:12%"></i>
+ <i class="orb" style="width:100px;height:100px;background:#FF9F43;right:-20px;top:55%;animation-delay:1s"></i>
+ <i class="orb" style="width:70px;height:70px;background:#fff;left:20%;bottom:8%;animation-delay:2s"></i>
+ <div class="sl"><svg viewBox="0 0 24 24" width="64" height="64" fill="#FF9F43" stroke="#5145CD" stroke-width="1.6" stroke-linejoin="round"><path d="M13 2L4 14h6l-1 8 9-12h-6z"/></svg></div>
+ <h1>MindSprint</h1><p>Give your brain a quick workout!</p>
+ <div class="bar"><i></i></div><small id="ls">Warming up your brain…</small>
+</div>
+<main>
+ <section id="v-home" class="view on"></section><section id="v-play" class="view"></section><section id="v-game" class="view"></section><section id="v-ach" class="view"></section><section id="v-me" class="view"></section>
+</main>
+<nav id="nav">
+ <button data-a="nav:home" class="on"><span id="n1"></span>Home</button><button data-a="nav:play"><span id="n2"></span>Play</button>
+ <button data-a="nav:ach"><span id="n3"></span>Achievements</button><button data-a="nav:me"><span id="n4"></span>Profile</button>
+</nav>
+<div id="modal"></div><div id="toast"></div>
+<script>
+/* Monetization hooks for the future. Nothing is active: no ads, no purchases. */
+const MONET={rewardedHints:false,premiumPacks:false,adFree:false};
+const $=s=>document.querySelector(s),DN=['Easy','Medium','Hard'],BASE=[10,15,20];
+const ic=(p,s=24)=>`<svg viewBox="0 0 24 24" width="${s}" height="${s}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="${p}"/></svg>`;
+const P={home:'M3 11l9-8 9 8M5 10v10h14V10',play:'M8 5v14l11-7z',cup:'M8 21h8M12 17v4M7 4h10v5a5 5 0 01-10 0zM17 5h3v2a3 3 0 01-3 3M7 5H4v2a3 3 0 003 3',me:'M12 3a4 4 0 100 8 4 4 0 000-8zM4 21a8 8 0 0116 0',num:'M12 5v14M5 12h14',mem:'M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4z',pat:'M3 17l5-8 4 5 3-4 6 7',log:'M9 18h6M10 21h4M12 3a6 6 0 00-4 10c1 1 1 2 1 3h6c0-1 0-2 1-3a6 6 0 00-4-10z',rea:'M13 2L4 14h6l-1 8 9-12h-6z'};
+[['n1','home'],['n2','play'],['n3','cup'],['n4','me']].forEach(([i,p])=>$('#'+i).innerHTML=ic(P[p]));
+const LOGO='<svg viewBox="0 0 24 24" width="26" height="26" fill="#FF9F43" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"><path d="M13 2L4 14h6l-1 8 9-12h-6z"/></svg>';
+const M={num:{n:'Number Challenge',c:'linear-gradient(135deg,#5145CD,#7a6dff)',d:'Fast mental maths'},mem:{n:'Memory Challenge',c:'linear-gradient(135deg,#2aa7cc,#42C6E8)',d:'Remember the sequence'},pat:{n:'Pattern Puzzle',c:'linear-gradient(135deg,#ef7d1a,#FF9F43)',d:'Find the missing item'},log:{n:'Logic Quiz',c:'linear-gradient(135deg,#1c9468,#26A875)',d:'Short reasoning puzzles'},rea:{n:'Reaction Challenge',c:'linear-gradient(135deg,#d03d3d,#E65353)',d:'Tap the moment it turns green'}};
+const ymd=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const today=()=>ymd(new Date()),yday=()=>{const d=new Date();d.setDate(d.getDate()-1);return ymd(d)};
+
+/* saved state, with safe loading */
+const def=()=>({xp:0,bestScore:0,streak:0,last:'',memMax:0,perfect:0,fastest:0,st:{games:0,ok:0,n:0},best:{},ach:{},pass:{},daily:{date:'',done:0,score:0},td:{d:'',n:0},set:{snd:1,hap:1,rm:0,diff:0}});
+let S=def();
+try{const p=JSON.parse(localStorage.getItem('ms1'));if(p&&typeof p=='object'){const d=def();S={...d,...p};for(const k of['st','best','ach','pass','daily','td','set'])S[k]={...d[k],...(p[k]&&typeof p[k]=='object'?p[k]:{})};for(const k of['xp','bestScore','streak','memMax','perfect','fastest']){S[k]=Number(S[k]);if(!isFinite(S[k])||S[k]<0)S[k]=0}if(![0,1,2].includes(S.set.diff))S.set.diff=0}}catch(e){S=def()}
+const save=()=>{try{localStorage.setItem('ms1',JSON.stringify(S))}catch(e){toast('Could not save progress')}};
+document.body.classList.toggle('rm',!!S.set.rm);
+const lvl=()=>Math.floor(S.xp/150)+1,curStreak=()=>S.last==today()||S.last==yday()?S.streak:0;
+let tt;function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),2200)}
+function ask(t,b,btns){return new Promise(r=>{const m=$('#modal');m.innerHTML=`<div class="box"><h3>${t}</h3><p>${b}</p><div class="col">${btns.map((x,i)=>`<button class="${i?'b2':'big'}" data-i="${i}">${x}</button>`).join('')}</div></div>`;m.classList.add('on');m.onclick=e=>{const i=e.target.dataset.i;if(i==null)return;m.classList.remove('on');r(+i)}})}
+let ac;const beep=(f,d=.12)=>{if(!S.set.snd)return;try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();const o=ac.createOscillator(),g=ac.createGain();o.frequency.value=f;g.gain.value=.07;o.connect(g);g.connect(ac.destination);o.start();o.stop(ac.currentTime+d)}catch(e){}};
+const hap=ms=>{if(S.set.hap&&navigator.vibrate)try{navigator.vibrate(ms)}catch(e){}};
+
+/* random helpers and seeded generator for the daily challenge */
+const mul=s=>()=>{s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};
+const seedOf=str=>{let h=2166136261;for(const c of str){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return h>>>0};
+const shuf=(a,r)=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const ri=(r,a,b)=>a+Math.floor(r()*(b-a+1));
+function near(a,r){const c=[...new Set([1,-1,2,-2,3,-3,10,-10,5,-5].map(k=>a+k))].filter(v=>v!=a&&v>=0);return shuf(c,r).slice(0,3)}
+function mk(q,ans,r,ex,m){const o=shuf([ans,...near(ans,r)],r);return{q,o:o.map(String),a:o.indexOf(ans),ex,m}}
+
+/* question generators (every answer is computed, never guessed) */
+function genNum(d,r){const R=[20,60,200][d],MM=[5,10,12][d],ops=d?['+','-','×','÷']:['+','-','×'],o=ops[ri(r,0,ops.length-1)];let a,b,x;
+ if(o=='+'){a=ri(r,2,R);b=ri(r,2,R);x=a+b}else if(o=='-'){a=ri(r,5,R);b=ri(r,1,a);x=a-b}else if(o=='×'){a=ri(r,2,MM);b=ri(r,2,MM+(d>1?3:0));x=a*b}else{b=ri(r,2,MM);x=ri(r,2,MM+(d>1?3:0));a=b*x}
+ return mk(`${a} ${o} ${b} = ?`,x,r,`${a} ${o} ${b} = ${x}`,'num')}
+function genPat(d,r){const T=[[0,1],[0,1,2,3],[0,1,2,3,4,5]][d],t=T[ri(r,0,T.length-1)];let s,ex,k;const a=[];
+ if(t==0){const s0=ri(r,1,20),k=ri(r,2,d>1?15:9);for(let i=0;i<6;i++)a.push(s0+k*i);ex=`Each number goes up by ${k}.`}
+ else if(t==1){const s0=ri(r,1,5),k=ri(r,2,3);for(let i=0;i<6;i++)a.push(s0*k**i);ex=`Each number is multiplied by ${k}.`}
+ else if(t==2){const n=ri(r,1,7);for(let i=0;i<6;i++)a.push((n+i)**2);ex='These are square numbers: '+a.map((v,i)=>`${n+i}²`).slice(0,3).join(', ')+'…'}
+ else if(t==3){const x=ri(r,1,9),p=ri(r,2,6),q=ri(r,1,4);let v=x;for(let i=0;i<6;i++){a.push(v);v+=i%2?q:p}ex=`The steps alternate between +${p} and +${q}.`}
+ else if(t==4){a.push(ri(r,1,4),ri(r,1,5));for(let i=2;i<6;i++)a.push(a[i-1]+a[i-2]);ex='Each number is the sum of the two before it.'}
+ else{const s0=ri(r,1,9),k0=ri(r,1,3);let v=s0;for(let i=0;i<6;i++){a.push(v);v+=k0+i}ex=`The steps grow by 1 each time: +${k0}, +${k0+1}, +${k0+2}…`}
+ const hi=d==0?5:t==0?ri(r,1,5):ri(r,2,5),x=a[hi],sh=a.map((v,i)=>i==hi?'?':v).join(', ');
+ return mk(sh,x,r,ex+` The missing number is ${x}.`,'pat')}
+const LQ=[
+[0,'All bloops are razzies. All razzies are lazzies. Are all bloops lazzies?','Yes, always',['No, never','Only some of them','Cannot be known'],'Bloops fit inside razzies, which fit inside lazzies.'],
+[0,'Tom is taller than Sam. Sam is taller than Ria. Who is the shortest?','Ria',['Tom','Sam','Cannot be known'],'Tom > Sam > Ria, so Ria is the shortest.'],
+[0,'Which number does not belong: 2, 4, 6, 9, 10?','9',['2','6','10'],'All the others are even; 9 is odd.'],
+[0,'Which word does not belong: Apple, Banana, Carrot, Mango?','Carrot',['Apple','Banana','Mango'],'Carrot is a vegetable; the others are fruits.'],
+[0,'Which is heavier: 1 kg of feathers or 1 kg of iron?','They weigh the same',['The feathers','The iron','Cannot be known'],'Both are exactly 1 kg.'],
+[0,'A is north of B, and B is north of C. Is A north of C?','Yes',['No','Only sometimes','Cannot be known'],'A is above B, which is above C.'],
+[1,'If today is Wednesday, what day will it be in 10 days?','Saturday',['Friday','Sunday','Monday'],'10 days is 1 week and 3 days. Wednesday + 3 = Saturday.'],
+[1,'Rita is 4 years older than Joe. Joe is 10. How old will Rita be in 5 years?','19',['14','15','9'],'Rita is 14 now, so she will be 19.'],
+[1,'A farmer has 17 sheep. All but 9 run away. How many are left?','9',['8','17','0'],'"All but 9" means 9 stay.'],
+[1,'If 5 machines make 5 items in 5 minutes, how long do 100 machines need to make 100 items?','5 minutes',['1 minute','20 minutes','100 minutes'],'Each machine makes 1 item in 5 minutes.'],
+[1,'Today is Monday. What day was it 100 days ago?','Saturday',['Friday','Sunday','Thursday'],'100 = 14 weeks + 2 days. Monday − 2 = Saturday.'],
+[1,'You overtake the runner in 2nd place. What place are you in now?','2nd',['1st','3rd','Cannot be known'],'You take the place of the runner you passed.'],
+[1,'If A=1, B=2, C=3 and so on, what is A+B+C+D+E?','15',['10','14','16'],'1+2+3+4+5 = 15.'],
+[2,'A pen and a notebook cost $1.10 together. The notebook costs $1.00 more than the pen. How much is the pen?','5 cents',['10 cents','1 cent','15 cents'],'Pen 5¢ + notebook $1.05 = $1.10, and the difference is $1.00.']];
+function genLog(pool,r,i){const x=pool[i],o=shuf([x[2],...x[3]],r);return{q:x[1],o,a:o.indexOf(x[2]),ex:x[4],m:'log'}}
+function buildQs(mode,d,r){const q=[];
+ if(mode=='num')for(let i=0;i<10;i++)q.push(genNum(d,r));
+ else if(mode=='pat')for(let i=0;i<8;i++)q.push(genPat(d,r));
+ else{const pool=shuf(LQ.filter(x=>mode=='daily'?x[0]<2:d==0?x[0]==0:d==1?x[0]<2:x[0]>=1),r);for(let i=0;i<(mode=='daily'?1:5);i++)q.push(genLog(pool,r,i));
+  if(mode=='daily'){q.unshift(genNum(1,r),genNum(1,r),genPat(1,r),genPat(1,r))}}
+ return q}
+
+/* progression */
+const unl=(m,d)=>d==0||!!S.pass[m+(d-1)];
+const pd=m=>unl(m,S.set.diff)?S.set.diff:0;
+const need=(m,d)=>m=='rea'?`average under ${[600,500][d-1]} ms`:'at least 60% accuracy';
+const lockMsg=(m,d)=>ask('Level locked 🔒',`Finish ${DN[d-1]} in ${M[m].n} with ${need(m,d)} to unlock ${DN[d]}.`,['OK']);
+const AC=[
+{id:'first',n:'First Game Completed',d:'Finish any game.',i:'🏁',f:()=>S.st.games>=1},
+{id:'ten',n:'Ten Correct Answers',d:'Get 10 answers right in total.',i:'✅',f:()=>S.st.ok>=10},
+{id:'mem',n:'Memory Master',d:'Recall a sequence of 8 or more symbols.',i:'🧠',f:()=>S.memMax>=8},
+{id:'perf',n:'Perfect Quiz',d:'Finish a quiz with every answer right.',i:'💯',f:()=>S.perfect>=1},
+{id:'str',n:'Three-Day Streak',d:'Play on 3 days in a row.',i:'🔥',f:()=>S.streak>=3},
+{id:'hi',n:'High Score',d:'Score 200 or more in one game.',i:'🏆',f:()=>S.bestScore>=200},
+{id:'fast',n:'Quick Reflexes',d:'React in under 250 ms once.',i:'⚡',f:()=>S.fastest>0&&S.fastest<250}];
+
+/* navigation and screens */
+let g=null;
+const hs=['home'],bar=t=>`<div class="tb"><button class="bk" data-a="back" aria-label="Back">←</button><h2>${t}</h2></div>`;
+function back(){const c=hs[hs.length-1];if(c=='home')return;if(c=='game'&&g&&!g.fin)return pause();hs.pop();go(hs[hs.length-1]||'home',1)}
+function go(v,bk){if(v!='game'&&g)clearTimeout(g.tmr);if(!bk){if(['home','play','ach','me'].includes(v)){hs.length=0;hs.push('home');if(v!='home')hs.push(v)}else if(hs[hs.length-1]!=v)hs.push(v)}document.querySelectorAll('.view').forEach(e=>e.classList.toggle('on',e.id=='v-'+v));document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.a=='nav:'+v));$('#nav').hidden=v=='game';scrollTo(0,0);({home:rHome,play:rPlay,ach:rAch,me:rMe}[v]||(()=>{}))()}
+function rHome(){const cs=curStreak(),n=S.td.d==today()?S.td.n:0,dd=S.daily.date==today()&&S.daily.done,rec=Object.entries(S.ach).sort((a,b)=>b[1]-a[1]).slice(0,3).map(([k])=>AC.find(a=>a.id==k)).filter(Boolean);
+ $('#v-home').innerHTML=`<div class="top"><span class="logo">${LOGO}</span><b>MindSprint</b></div><h2 class="hd">Give your brain a quick workout!</h2>
+<div class="card"><div class="sts"><div><small>Level</small><b>${lvl()}</b></div><div><small>Best score</small><b>${S.bestScore}</b></div><div><small>Streak</small><b>${cs} 🔥</b></div></div><div class="xp"><i style="width:${S.xp%150/150*100}%"></i></div><small>${S.xp%150} / 150 XP to level ${lvl()+1}</small></div>
+<div class="card dly"><div><h3>Daily challenge</h3><small>${dd?'Done today · score '+S.daily.score:'5 quick mixed questions · bonus XP'}</small></div><button class="b2o" data-a="daily">${dd?'Replay':'Start'}</button></div>
+<button class="big" data-a="pn">▶ Play Now</button>
+<h3 class="sh">Puzzle categories</h3><div class="cats">${Object.keys(M).map(m=>`<button class="cat" style="background:${M[m].c}" data-a="play:${m}:${pd(m)}"><i>${ic(P[m],28)}</i>${M[m].n}</button>`).join('')}</div>
+<div class="card"><b>Daily goal</b> <small>${Math.min(n,3)} of 3 games today</small><div class="xp"><i style="width:${Math.min(n,3)/3*100}%"></i></div></div>
+<h3 class="sh">Recent achievements</h3>${rec.length?`<div class="rec">${rec.map(a=>`<div class="bd">${a.i}<small>${a.n}</small></div>`).join('')}</div>`:'<p class="emp">No achievements yet. Finish a game to start earning them.</p>'}`}
+function rPlay(){$('#v-play').innerHTML=bar('Choose a game')+Object.keys(M).map(m=>{const b=S.best[m],bt=b?(m=='rea'?b+' ms avg':b+' pts'):'not played yet';return`<div class="pm"><div style="background:${M[m].c}"><h3>${M[m].n}</h3><small>${M[m].d} · Best: ${bt}</small></div><div class="row">${[0,1,2].map(d=>`<button class="chip ${unl(m,d)?'':'lk'}" data-a="play:${m}:${d}">${unl(m,d)?'':'🔒 '}${DN[d]}</button>`).join('')}</div></div>`}).join('')}
+function rAch(){$('#v-ach').innerHTML=`${bar('Achievements')}<p class="qn">${Object.keys(S.ach).length} of ${AC.length} unlocked</p><div class="ag">${AC.map(a=>{const t=S.ach[a.id];return`<div class="card ac ${t?'':'lkd'}"><span>${t?a.i:'🔒'}</span><b>${a.n}</b><small>${t?'Unlocked '+new Date(t).toLocaleDateString():a.d}</small></div>`}).join('')}</div>`}
+const tg=(k,t)=>`<div class="srow"><span>${t}</span><input type="checkbox" data-s="${k}" ${S.set[k]?'checked':''}></div>`;
+function rMe(){const s=S.st,bs=Object.keys(M).map(m=>`<span>${M[m].n}</span><b>${S.best[m]?S.best[m]+(m=='rea'?' ms':' pts'):'—'}</b>`).join('');
+ $('#v-me').innerHTML=`${bar('Profile')}<div class="pf"><span class="av">${ic(P.me,34)}</span><div><h2>Player</h2><small>Level ${lvl()} · ${S.xp} XP total</small></div></div>
+<div class="card"><h3>Statistics</h3><div class="kv"><span>Games played</span><b>${s.games}</b><span>Correct answers</span><b>${s.ok}</b><span>Accuracy</span><b>${s.n?Math.round(s.ok/s.n*100)+'%':'—'}</b><span>Current streak</span><b>${curStreak()} days</b>${bs}</div></div>
+<div class="card"><h3>Settings</h3>${tg('snd','Sound effects')}${tg('hap','Haptic feedback')}${tg('rm','Reduce animations')}<div class="srow"><span>Preferred difficulty</span><select data-s="diff">${DN.map((d,i)=>`<option value="${i}" ${S.set.diff==i?'selected':''}>${d}</option>`).join('')}</select></div><small>Vibration depends on your device and WebView and may not work everywhere.</small></div>
+<div class="card"><h3>How to play</h3><p>Pick a game and a level. Harder levels unlock when you pass the one before (60% accuracy, or a fast enough reaction average). Quiz points: 10/15/20 per right answer plus up to 5 for speed. Play on consecutive days to build a streak.</p></div>
+<div class="card"><h3>Privacy</h3><p>No account, no ads and no internet needed. Progress is saved only on this device in browser storage, which Android or you can clear.</p></div>
+<button class="b2" data-a="reset" style="width:100%">Reset game progress</button><p class="qn">MindSprint v1.0.0</p>`}
+document.addEventListener('change',e=>{const k=e.target.dataset.s;if(!k)return;S.set[k]=e.target.type=='checkbox'?+e.target.checked:+e.target.value;if(k=='rm')document.body.classList.toggle('rm',!!S.set.rm);save()});
+
+/* game flow */
+function startGame(m,d,daily){if(!daily&&!unl(m,d))return lockMsg(m,d);if(g)clearTimeout(g.tmr);
+ g={mode:daily?'daily':m,d:daily?1:d,daily,i:0,n:0,ok:0,score:0,tm:0,at:[],fin:0,lock:0,qs:[],maxL:0};
+ const quiz=daily||m=='num'||m=='pat'||m=='log';if(quiz)g.qs=buildQs(g.mode,g.d,daily?mul(seedOf(today())):Math.random);
+ go('game');if(quiz)rQ();else if(m=='mem')rMem();else{g.st='idle';rRea()}}
+function gHead(){const len=g.qs.length||5,pr=(g.qs.length?g.i:g.n)/len*100;return`<div class="gh"><button class="pb" data-a="back" aria-label="Back">←</button><button class="pb" data-a="pause" aria-label="Pause">⏸</button><div class="gp"><i style="width:${pr}%"></i></div><b id="gs">${g.score}</b></div>`}
+function rQ(){const q=g.qs[g.i];g.t0=Date.now();g.lock=0;$('#v-game').innerHTML=gHead()+`<p class="qn">Question ${g.i+1} of ${g.qs.length}${g.daily?' · '+M[q.m].n:''}</p><div class="card qq">${q.q}</div><div class="opts">${q.o.map((o,i)=>`<button class="op" data-a="ans:${i}">${o}</button>`).join('')}</div><div id="fb"></div>`}
+function ans(i){if(g.lock)return;g.lock=1;const q=g.qs[g.i],s=(Date.now()-g.t0)/1000,ok=i==q.a;g.n++;g.tm+=s;if(ok){g.ok++;g.score+=BASE[g.d]+Math.max(0,Math.round(5-s))}
+ document.querySelectorAll('.op').forEach((b,k)=>{b.disabled=true;if(k==q.a)b.classList.add('ok');else if(k==i)b.classList.add('er')});$('#gs').textContent=g.score;beep(ok?660:220);hap(ok?30:80);
+ $('#fb').innerHTML=`<div class="fb ${ok?'ok':'er'}"><b>${ok?'Correct!':'Not quite.'}</b> ${ok?'':'Answer: '+q.o[q.a]+'. '}${q.ex||''}</div><button class="big" data-a="next">${g.i+1<g.qs.length?'Next':'See results'}</button>`}
+function nextQ(){g.i++;g.i<g.qs.length?rQ():finish()}
+const SY=['🍎','⭐','🔷','🔶','🎈','🍀','🐱','🌙','🎵'];
+function rMem(){g.lock=0;const L=[3,4,5][g.d]+g.n;g.pool=SY.slice(0,[6,8,9][g.d]);g.seq=Array.from({length:L},()=>g.pool[Math.floor(Math.random()*g.pool.length)]);g.in=[];
+ $('#v-game').innerHTML=gHead()+`<p class="qn">Round ${g.n+1} of 5 · ${L} symbols</p><div class="card seq">${g.seq.map(s=>`<span>${s}</span>`).join('')}</div><p class="qn">Memorise the order…</p>`;
+ g.tmr=setTimeout(()=>{g.t0=Date.now();drawRec()},L*[900,750,600][g.d]+500)}
+function drawRec(){$('#v-game').innerHTML=gHead()+`<p class="qn">Tap the symbols in the same order</p><div class="dots">${g.seq.map((_,i)=>`<i class="${i<g.in.length?'f':''}"></i>`).join('')}</div><div class="sg">${g.pool.map(s=>`<button class="sy" data-a="pick:${s}">${s}</button>`).join('')}</div>`}
+function pick(s){if(g.lock)return;g.in.push(s);if(s!=g.seq[g.in.length-1])endRound(0);else if(g.in.length==g.seq.length)endRound(1);else drawRec()}
+function endRound(ok){g.lock=1;g.n++;g.tm+=(Date.now()-g.t0)/1000;const L=g.seq.length;if(ok){g.ok++;g.score+=L*5*(g.d+1);g.maxL=Math.max(g.maxL,L)}beep(ok?660:220);hap(ok?30:80);
+ $('#v-game').innerHTML=gHead()+`<div class="fb ${ok?'ok':'er'}"><b>${ok?'Perfect recall!':'Not this time.'}</b><br>The sequence was:</div><div class="card seq">${g.seq.map(s=>`<span>${s}</span>`).join('')}</div>`;
+ g.tmr=setTimeout(()=>{g.lock=0;g.n>=5?finish():rMem()},1500)}
+function rRea(){const T={idle:[g.n?'Tap to continue':'Tap to start','#5145CD','Wait for green, then tap as fast as you can.'],wait:['Wait for green…','#FF9F43','Do not tap yet!'],go:['TAP NOW!','#26A875',''],early:['Too early!','#E65353','Tap to try again. That attempt did not count.'],res:[g.last+' ms','#42C6E8','Tap to continue.']}[g.st];
+ $('#v-game').innerHTML=gHead()+`<p class="qn">Attempt ${Math.min(g.n+1,5)} of 5</p><button class="pad" data-a="pad" style="background:${T[1]}">${T[0]}</button><p class="qn">${T[2]}</p>`}
+function pad(){if(!g||g.mode!='rea'||g.fin)return;const s=g.st;
+ if(s=='idle'){g.st='wait';rRea();const[a,b]=[[1500,4000],[1200,5000],[1000,6000]][g.d];g.tmr=setTimeout(()=>{g.st='go';rRea();g.t1=performance.now()},a+Math.random()*(b-a))}
+ else if(s=='wait'){clearTimeout(g.tmr);g.st='early';beep(200);rRea()}
+ else if(s=='go'){const ms=Math.round(performance.now()-g.t1);g.at.push(ms);g.n++;g.last=ms;g.score+=Math.max(10,Math.round((800-ms)/4));beep(700);hap(25);if(g.n>=5)finish();else{g.st='res';rRea()}}
+ else{g.st='idle';rRea()}}
+async function pause(){if(!g||g.fin)return;clearTimeout(g.tmr);const t=Date.now(),c=await ask('Paused','Your progress is kept.',['Resume','Restart','Quit to Home']);
+ if(c==0){g.t0+=Date.now()-t;if(g.mode=='mem'){g.lock=0;g.n>=5?finish():rMem()}else if(g.mode=='rea'){if(g.st=='wait'||g.st=='go'){g.st='idle';rRea()}}}
+ else if(c==1)startGame(g.daily?'daily':g.mode,g.d,g.daily);else{g=null;go('home')}}
+function finish(){if(g.fin)return;g.fin=1;const q=g.mode!='rea',acc=q?Math.round(g.ok/g.n*100):null,avg=q?0:Math.round(g.at.reduce((a,b)=>a+b,0)/g.at.length);
+ let xp=Math.round(g.score/(q?5:10))+(q&&acc==100?10:0),note='';
+ if(g.daily){if(S.daily.date==today()&&S.daily.done){xp=0;note='You already completed today’s daily challenge, so this run is practice only.'}else S.daily={date:today(),done:1,score:g.score}}
+ const L0=lvl();S.xp+=xp;const st=S.st;st.games++;if(q){st.ok+=g.ok;st.n+=g.n;S.bestScore=Math.max(S.bestScore,g.score);if(acc==100&&g.n>=5&&g.mode!='mem')S.perfect++}
+ if(g.mode=='mem')S.memMax=Math.max(S.memMax,g.maxL);
+ if(q)S.best[g.mode]=Math.max(S.best[g.mode]||0,g.score);else{S.best.rea=S.best.rea?Math.min(S.best.rea,avg):avg;S.fastest=S.fastest?Math.min(S.fastest,...g.at):Math.min(...g.at)}
+ const pass=!g.daily&&(q?acc>=60:avg<=([600,500][g.d]||0));if(pass)S.pass[g.mode+g.d]=1;
+ if(S.last!=today()){S.streak=(S.last==yday()?S.streak:0)+1;S.last=today()}
+ if(S.td.d!=today())S.td={d:today(),n:0};S.td.n++;
+ const nu=AC.filter(a=>!S.ach[a.id]&&a.f());nu.forEach(a=>S.ach[a.id]=Date.now());save();
+ g.res={q,acc,avg,xp,note,pass,nu,up:lvl()>L0};rRes()}
+function rRes(){const r=g.res,nl=!g.daily&&g.d<2&&unl(g.mode,g.d+1),m=g.daily?'Daily challenge':M[g.mode].n+' · '+DN[g.d];
+ $('#v-game').innerHTML=`${bar(m)}<div class="res"><h2>${r.pass||g.daily?'Level complete! 🎉':'Good effort!'}</h2>
+<div class="rg"><div><b>${g.score}</b>Score</div><div><b>${r.q?r.acc+'%':r.avg+' ms'}</b>${r.q?'Accuracy ('+g.ok+'/'+g.n+')':'Average reaction'}</div><div><b>${g.tm?g.tm.toFixed(1)+' s':g.at.length+' taps'}</b>${g.tm?'Answer time':'Attempts'}</div><div><b>+${r.xp}</b>XP earned</div></div>
+${r.up?`<div class="fb ok"><b>Level up!</b> You reached level ${lvl()}.</div>`:''}${r.note?`<div class="fb er">${r.note}</div>`:''}
+${r.nu.map(a=>`<div class="fb ok">${a.i} <b>Achievement unlocked:</b> ${a.n}</div>`).join('')}
+${!g.daily&&!r.pass&&g.d<2?`<div class="fb er">Next level locked: finish ${DN[g.d]} with ${need(g.mode,g.d+1)} to unlock ${DN[g.d+1]}.</div>`:''}
+<button class="big" data-a="replay">Play again</button>${nl?`<button class="big" style="background:linear-gradient(135deg,#5145CD,#7a6dff);box-shadow:none" data-a="nextlvl">Next level: ${DN[g.d+1]}</button>`:''}<button class="b2" style="width:100%" data-a="nav:home">Home</button></div>`}
+async function doReset(){if(await ask('Reset progress?','This erases your XP, scores, streak and achievements on this device.',['Cancel','Reset everything'])==1){try{localStorage.removeItem('ms1')}catch(e){}const rm=S.set.rm;S=def();document.body.classList.remove('rm');save();toast('Progress reset');rMe()}}
+function quick(){const m=Object.keys(M)[Math.floor(Math.random()*5)];startGame(m,pd(m))}
+
+/* input handling */
+const A={back,nav:x=>go(x),play:(x,y)=>startGame(x,+y),pn:quick,daily:()=>startGame('daily',1,1),ans:x=>ans(+x),next:nextQ,pause,replay:()=>startGame(g.daily?'daily':g.mode,g.d,g.daily),nextlvl:()=>startGame(g.mode,g.d+1),pick,reset:doReset};
+document.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b)return;const[a,x,y]=b.dataset.a.split(':');if(a!='pad'&&A[a])A[a](x,y)});
+document.addEventListener('pointerdown',e=>{if(e.target.closest('[data-a=pad]'))pad()});
+
+/* phone back button */
+history.pushState({},'');
+addEventListener('popstate',()=>{if(hs[hs.length-1]!='home'){history.pushState({},'');back()}});
+/* splash */
+rHome();
+setTimeout(()=>{$('#splash').classList.add('out');setTimeout(()=>$('#splash').remove(),600)},2000);
+</script></body></html>
